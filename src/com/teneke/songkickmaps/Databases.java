@@ -50,6 +50,14 @@ public class Databases {
       Double minLon,
       Double maxLon) {
 
+    if (venueDB.size() == 0) {
+      try {
+        populateDatabases(24426);
+      } catch (JSONException e) {
+        // TODO Auto-generated catch block
+        e.printStackTrace();
+      }
+    }
     Spot min = new Spot(minLat, minLon, 1);
     Spot max = new Spot(maxLat, maxLon, 1);
     SortedMap<Spot, Long> spots = spotDB.subMap(min, max);

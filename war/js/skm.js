@@ -232,6 +232,7 @@ function addMarker(map,lat,lon,title,id,link){
     var infowindow = new google.maps.InfoWindow({content: niceInfo(title,link)});
     google.maps.event.addListener(marker, 'click', function() {
       infowindow.open(map,marker);
+      _gaq.push(['_trackEvent', 'Info', 'Show']);
     });
 }
 
@@ -244,7 +245,7 @@ function getVenues(bounds) {
       addMarker(map,e.lat,e.lng,e.displayName,e.id,e.uri);
       }
     })
-  
+    _gaq.push(['_trackEvent', 'Venue', 'Get']);
 }
 function getBounds(){
   var bounds = { maxLat:map.getBounds().getNorthEast().lat(),
