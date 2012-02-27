@@ -31,8 +31,8 @@ public class Spot implements Comparable<Spot> {
   @Override
   public int compareTo(Spot t) {
 
-    if (this.lat >= t.getLat()) {
-      if (this.lon >= t.getLon()) {
+    if (this.lon >= t.getLon()) {
+      if (this.lat >= t.getLat()) {
         return 1;
       }
     }

@@ -24,6 +24,9 @@ public class TestSpotComparable {
   Spot t11 = new Spot(11.00, 10.00, 1);
   Spot t12 = new Spot(10.00, 11.00, 1);
 
+  Spot s5020 = new Spot(50.0, 20.0, 1);
+  Spot s0021 = new Spot(0.0, 21.0, 1);
+
   @Test
   public void testComparable() throws JSONException {
 
@@ -44,5 +47,9 @@ public class TestSpotComparable {
 
     Assert.assertEquals(1, t11.compareTo(t));
     Assert.assertEquals(1, t12.compareTo(t));
+
+    // THIS IS THE PROBLEM. They are both less than the other
+    Assert.assertEquals(-1, s5020.compareTo(s0021));
+    Assert.assertEquals(-1, s0021.compareTo(s5020));
   }
 }
