@@ -216,7 +216,9 @@ function isOkToAdd(id) {
 
 function niceInfo(title,link,id) {
   var x = '<div id="title">'+title+'</div>';
+  var z = '<div id="events_'+id+'"></div>';
   var l = '<div id="link"><a href="'+link+'" target="_blank">More Venue Details</a></div>';
+  
   return x+l;
 }
 function addMarker(map,lat,lon,title,id,link){
@@ -229,13 +231,20 @@ function addMarker(map,lat,lon,title,id,link){
  
     marker.setMap(map);
   
-    var infowindow = new google.maps.InfoWindow({content: niceInfo(title,link)});
+    var infowindow = new google.maps.InfoWindow({content: niceInfo(title,link,id)});
     google.maps.event.addListener(marker, 'click', function() {
       infowindow.open(map,marker);
       _gaq.push(['_trackEvent', 'Info', 'Show']);
     });
+//    infowindow.event.addListener(marker,'domready',function(){
+//    	getEvents(id);
+//    })
 }
 
+function getEvents(id){
+	
+	    console.log(id);
+}
 
 function getVenues(bounds) {
   jQuery.getJSON( '/venues', bounds,function(a){
