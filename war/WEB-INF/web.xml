@@ -6,7 +6,7 @@ xsi:schemaLocation="http://java.sun.com/xml/ns/javaee
 http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
 	<servlet>
 		<servlet-name>SongKickServer</servlet-name>
-		<servlet-class>com.teneke.songkickmaps.VenueServlet</servlet-class>
+		<servlet-class>com.teneke.songkickmaps.servlet.VenueServlet</servlet-class>
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>SongKickServer</servlet-name>
@@ -15,7 +15,7 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
 	
 	<servlet>
         <servlet-name>Initializer</servlet-name>
-        <servlet-class>com.teneke.songkickmaps.InitializerServlet</servlet-class>
+        <servlet-class>com.teneke.songkickmaps.servlet.InitializerServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>Initializer</servlet-name>
@@ -23,7 +23,7 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
     </servlet-mapping>
     <servlet>
         <servlet-name>VenueServlet</servlet-name>
-        <servlet-class>com.teneke.songkickmaps.VenueEventServlet</servlet-class>
+        <servlet-class>com.teneke.songkickmaps.servlet.VenueEventServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>VenueServlet</servlet-name>

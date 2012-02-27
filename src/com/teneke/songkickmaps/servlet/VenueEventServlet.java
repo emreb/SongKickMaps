@@ -1,10 +1,12 @@
-package com.teneke.songkickmaps;
+package com.teneke.songkickmaps.servlet;
 
 import java.io.IOException;
 
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import com.teneke.songkickmaps.SongKickAPI;
 
 @SuppressWarnings("serial")
 public class VenueEventServlet extends HttpServlet {
