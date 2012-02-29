@@ -5,7 +5,7 @@ import junit.framework.Assert;
 import org.json.JSONException;
 import org.junit.Test;
 
-import com.teneke.songkickmaps.Spot;
+import com.teneke.songkickmaps.model.Spot;
 
 public class TestSpotComparable {
 

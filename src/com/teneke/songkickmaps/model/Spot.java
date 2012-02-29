@@ -1,4 +1,4 @@
-package com.teneke.songkickmaps;
+package com.teneke.songkickmaps.model;
 
 public class Spot implements Comparable<Spot> {
 
