@@ -216,10 +216,12 @@ function isOkToAdd(id) {
 
 function niceInfo(title,link,id) {
   var x = '<div id="title">'+title+'</div>';
-  var z = '<div id="events_'+id+'"></div>';
-  var l = '<div id="link"><a href="'+link+'" target="_blank">More Venue Details</a></div>';
-  
-  return x+l;
+  var z = '<div id="events_'+id+'">Loading...</div>';
+  var l = '<div id="link"><a href="'+link+'" target="_blank">About the Venue</a></div>';
+  // TODO: Attach the following to link click above
+  // _gaq.push(['_trackEvent', 'Venue', 'Click', title]);
+  //console.log("building box for "+ id);
+  return x+z+l;
 }
 function addMarker(map,lat,lon,title,id,link){
 //var poz  = new google.maps.LatLng(51.51376,-0.14364);
@@ -231,19 +233,32 @@ function addMarker(map,lat,lon,title,id,link){
  
     marker.setMap(map);
   
-    var infowindow = new google.maps.InfoWindow({content: niceInfo(title,link,id)});
+    var infowindow = new google.maps.InfoWindow({maxWidth:200, content: niceInfo(title,link,id)});
     google.maps.event.addListener(marker, 'click', function() {
       infowindow.open(map,marker);
       _gaq.push(['_trackEvent', 'Info', 'Show']);
     });
-//    infowindow.event.addListener(marker,'domready',function(){
-//    	getEvents(id);
-//    })
+    google.maps.event.addListener(infowindow,'domready',function(){
+      getEvents({id:id},jQuery('#events_'+id));
+    });
 }
 
-function getEvents(id){
-	
-	    console.log(id);
+
+function getEvents(venueId,div) {
+  jQuery.getJSON( '/events', venueId,function(a){
+    var events = a.resultsPage.results.event;
+    console.log(events.length);
+    console.log(events);
+	var thisHtml = '';
+    for (var i=0; i<events.length;i++) {
+	//console.log(div);
+	thisHtml += '<a href="'+events[i].uri+'" target="_blank">'+events[i].displayName+'</a>';
+	// TODO: Attach the following to link click above
+  // _gaq.push(['_trackEvent', 'Event', 'Click', title]);
+    }
+	div.html(thisHtml);
+  })
+    _gaq.push(['_trackEvent', 'Events', 'Get']);
 }
 
 function getVenues(bounds) {
