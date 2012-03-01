@@ -60,14 +60,14 @@ public class Databases {
       Double minLon,
       Double maxLon) {
 
-    if (venueDB.size() == 0) {
-      try {
-        populateDatabases(24426);
-      } catch (JSONException e) {
-        // TODO Auto-generated catch block
-        e.printStackTrace();
-      }
-    }
+    // if (venueDB.size() == 0) {
+    // try {
+    // // populateDatabases(24426);
+    // } catch (JSONException e) {
+    // // TODO Auto-generated catch block
+    // e.printStackTrace();
+    // }
+    // }
     Spot min = new Spot(minLat, minLon, 1);
     Spot max = new Spot(maxLat, maxLon, 1);
     Interval2D range = new Interval2D(min, max);
@@ -92,7 +92,13 @@ public class Databases {
         JSONObject venue = event.getJSONObject("venue");
         if (venue != JSONObject.NULL && venue.get("lat") != JSONObject.NULL
             && venue.get("lng") != JSONObject.NULL) {
-          if (getVenue(venue.getLong("id")) == null) {
+          long venueId = -1;
+          try {
+            venueId = venue.getLong("id");
+          } catch (Exception e) {
+            System.err.println("Error in parsing:" + venue);
+          }
+          if (venueId != -1 && getVenue(venueId) == null) {
             try {
               storeVenueToMemory(venue.getDouble("lat"),
                   venue.getDouble("lng"), venue.getLong("id"), venue);
@@ -106,6 +112,7 @@ public class Databases {
       page++;
       populateDatabases(metroCode, page);
     }
+
   }
 
   public static void main(String[] args) {

@@ -16,10 +16,12 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
 	<servlet>
         <servlet-name>Initializer</servlet-name>
         <servlet-class>com.teneke.songkickmaps.servlet.InitializerServlet</servlet-class>
+        <load-on-startup>1</load-on-startup>
     </servlet>
     <servlet-mapping>
         <servlet-name>Initializer</servlet-name>
         <url-pattern>/admin/init</url-pattern>
+        
     </servlet-mapping>
     <servlet>
         <servlet-name>VenueServlet</servlet-name>

@@ -15,4 +15,5 @@
     <property name="java.util.logging.config.file" value="WEB-INF/logging.properties"/> 
   </system-properties>
  
+ <warmup-requests-enabled>true</warmup-requests-enabled>
 </appengine-web-app>
