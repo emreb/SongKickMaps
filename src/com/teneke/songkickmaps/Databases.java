@@ -96,7 +96,7 @@ public class Databases {
           try {
             venueId = venue.getLong("id");
           } catch (Exception e) {
-            System.err.println("Error in parsing:" + venue);
+            // System.err.println("Error in parsing:" + venue);
           }
           if (venueId != -1 && getVenue(venueId) == null) {
             try {
