@@ -1,7 +1,13 @@
 package com.teneke.songkickmaps;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.LinkedList;
+
+import net.sf.jsr107cache.Cache;
+import net.sf.jsr107cache.CacheException;
+import net.sf.jsr107cache.CacheFactory;
+import net.sf.jsr107cache.CacheManager;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -44,9 +50,27 @@ public class Databases {
 
   }
 
+  static Cache spotCache;
+
+  public static void populateMemcacheDB(String name, QuadTree q) {
+
+    if (spotCache == null) {
+      try {
+        CacheFactory cacheFactory =
+            CacheManager.getInstance().getCacheFactory();
+        spotCache = cacheFactory.createCache(Collections.emptyMap());
+      } catch (CacheException e) {
+        // ...
+      }
+    }
+    spotCache.put(name, q);
+
+  }
+
   public static void populateDatabases(int metroCode) throws JSONException {
 
     populateDatabases(metroCode, 1);
+
   }
 
   public static JSONObject getVenue(long id) {

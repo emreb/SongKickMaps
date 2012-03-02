@@ -1,8 +1,14 @@
 package com.teneke.songkickmaps.model;
 
+import java.io.Serializable;
 import java.util.LinkedList;
 
-public class QuadTree<Key extends Comparable<Spot>> {
+public class QuadTree<Key extends Comparable<Spot>> implements Serializable {
+
+  /**
+   * 
+   */
+  private static final long serialVersionUID = 1L;
 
   private Node root;
 
