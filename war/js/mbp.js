@@ -174,6 +174,42 @@ function handleNoGeolocation(errorFlag) {
     map.setCenter(options.position);
 }
 
+function findDistance(cLat,cLon,tLat,tLon) {
+  var lat = Math.pow((cLat - tLat),2);
+  var lon = Math.pow((cLon - tLon),2);
+  return Math.sqrt(lat+lon);
+}
+function presetCities() {
+  var cities = [{name: "NewYork", lat: 40.7512, lon: -73.9885},
+                {name: "London", lat: 51.50832, lon: -0.12774},
+                {name: "SanFrancisco", lat: 37.7770, lon: -122.4176},
+                {name: "Boston", lat: 42.3592, lon: -71.0591},
+                {name: "Chicago", lat: 41.8789, lon: -87.6291}];
+  return cities;
+}
+function findNearestCity(position) {
+  
+    
+    var pos = { lat: position.coords.latitude,
+                lon: position.coords.longitude};
+    
+    var cities = presetCities();
+    var closestCity;
+    for (var i=0; i<cities.length;i++) {
+      var distance = findDistance(pos.lat,pos.lon,cities[i].lat,cities[i].lon);
+      if (i==0) {
+        minDistance = distance;
+        closestCity = cities[i];
+      } else if (distance < minDistance) {
+        minDistance = distance;
+        closestCity = cities[i];
+      }
+    }
+    return closestCity;
+    
+
+}
+
 function initialize() {
     var myOptions = {
       zoom: 15,
@@ -191,8 +227,10 @@ function initialize() {
     // Try HTML5 geolocation
     if(navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(function(position) {
-        var pos = new google.maps.LatLng(position.coords.latitude,
-                                         position.coords.longitude);
+        var city = findNearestCity(position);
+        var pos = new google.maps.LatLng(city.lat,city.lon);
+        $(".city").removeClass('active');
+        $("#link"+city.name).addClass('active');
 
        /* var infowindow = new google.maps.InfoWindow({
           map: map,
@@ -219,22 +257,22 @@ function initialize() {
       }
     }); 
     
-    $("#linkLondon").click(function() {
-      map.setCenter(new google.maps.LatLng(51.50832, -0.12774));
-    });
-    $("#linkNewYork").click(function() {
-      map.setCenter(new google.maps.LatLng(40.7512,-73.9885)); 
-    });
-    $("#linkSanFrancisco").click(function() {
-      map.setCenter(new google.maps.LatLng(37.7770, -122.4176));
-    });
-    $("#linkBoston").click(function() {
-      map.setCenter(new google.maps.LatLng(42.3592, -71.0591));
-    });
-    $("#linkChicago").click(function() {
-      map.setCenter(new google.maps.LatLng(41.8789, -87.6291));
-    });
+    
+    var cities = presetCities();
+    
+    
+    $(".city").click(function() {
+      var city = $(this).data("city");
+      for (var i=0; i<cities.length;i++) {
+        if (cities[i].name === city){
+          map.setCenter(new google.maps.LatLng(cities[i].lat, cities[i].lon));
+        }
+       }
+      $(".city").removeClass('active');
+      $(this).addClass('active');
+    })
 }
+
 
 var markerDB = new Map;
 
