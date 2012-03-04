@@ -41,4 +41,8 @@ public class MemCachePopulator {
 		return null;
 	}
 
+	public static void main(String[] args) {
+		populateAllTheCities();
+	}
+
 }

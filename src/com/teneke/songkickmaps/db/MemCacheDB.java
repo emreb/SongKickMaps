@@ -35,7 +35,12 @@ public class MemCacheDB {
 
 	public static void putCitySpots(long cityCode, QuadTree q) {
 
-		MemCacheDB.getInstance().put(cityCode, q);
+		try {
+			MemCacheDB.getInstance().put(cityCode, q);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		updateLoadedCities(LocationService.getInstance().getCity(cityCode));
 
 	}
@@ -49,14 +54,16 @@ public class MemCacheDB {
 	}
 
 	public synchronized static void updateLoadedCities(City c) {
-		LinkedList<City> cities = (LinkedList<City>) MemCacheDB.getInstance().get(
-				"LOADED_CITIES");
-		if (cities == null) {
+		Object oCities = MemCacheDB.getInstance().get("LOADED_CITIES");
+		LinkedList<City> cities = null;
+		if (oCities == null) {
 			cities = new LinkedList<City>();
+		} else {
+			cities = (LinkedList<City>) oCities;
 		}
 		cities.remove(c);
 		cities.add(c);
-		MemCacheDB.getInstance().put("LOADED_CITIES", c);
+		MemCacheDB.getInstance().put("LOADED_CITIES", cities);
 	}
 
 	public static LinkedList<City> getLoadedCities() {

@@ -13,7 +13,7 @@ public class QuadTree<Key extends Comparable<Spot>> implements Serializable {
 	private Node root;
 
 	// helper node data type
-	private class Node {
+	private class Node implements Serializable {
 
 		Spot s; // x- and y- coordinates
 		Node NW, NE, SE, SW; // four subtrees

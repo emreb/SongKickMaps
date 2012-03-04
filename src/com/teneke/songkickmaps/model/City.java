@@ -1,9 +1,11 @@
 package com.teneke.songkickmaps.model;
 
+import java.io.Serializable;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class City {
+public class City implements Serializable {
 
 	private String name;
 	private double lat;

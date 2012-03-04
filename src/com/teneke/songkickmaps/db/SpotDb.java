@@ -1,5 +1,6 @@
 package com.teneke.songkickmaps.db;
 
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.LinkedList;
 
@@ -14,8 +15,12 @@ import com.teneke.songkickmaps.model.Interval2D;
 import com.teneke.songkickmaps.model.QuadTree;
 import com.teneke.songkickmaps.model.Spot;
 
-public class SpotDb {
+public class SpotDb implements Serializable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private QuadTree<Spot> spotDB = new QuadTree<Spot>();
 	private HashMap<Long, City> loadedCities = new HashMap<Long, City>();
 

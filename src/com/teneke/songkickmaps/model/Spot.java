@@ -1,12 +1,14 @@
 package com.teneke.songkickmaps.model;
 
+import java.io.Serializable;
+
 import org.json.JSONObject;
 
-public class Spot implements Comparable<Spot> {
+public class Spot implements Comparable<Spot>, Serializable {
 
-	final double lat;
-	final double lon;
-	final long id;
+	private double lat;
+	private double lon;
+	private long id;
 
 	public Spot(double lat, double lon, long id) {
 
