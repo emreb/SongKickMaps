@@ -1,4 +1,4 @@
-package com.teneke.songkickmaps;
+package com.teneke.songkickmaps.db;
 
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -7,17 +7,32 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import com.teneke.songkickmaps.LocationService;
+import com.teneke.songkickmaps.SongKickAPI;
+import com.teneke.songkickmaps.model.City;
 import com.teneke.songkickmaps.model.Interval2D;
 import com.teneke.songkickmaps.model.QuadTree;
 import com.teneke.songkickmaps.model.Spot;
 
-public class Databases {
+public class SpotDb {
 
-	private static HashMap<Long, JSONObject> venueDB = new HashMap<Long, JSONObject>();
+	private QuadTree<Spot> spotDB = new QuadTree<Spot>();
+	private HashMap<Long, City> loadedCities = new HashMap<Long, City>();
 
-	private static QuadTree<Spot> spotDB = new QuadTree<Spot>();
+	private static SpotDb _instance;
 
-	public static void storeVenueToMemory(double lat, double lon, long id,
+	public static SpotDb getInstance() {
+		if (_instance == null) {
+			_instance = new SpotDb();
+		}
+		return _instance;
+	}
+
+	public SpotDb() {
+
+	}
+
+	private void storeVenueToMemory(double lat, double lon, long id,
 			JSONObject data) {
 
 		Spot s = new Spot(lat, lon, id);
@@ -30,51 +45,46 @@ public class Databases {
 			// TODO Auto-generated catch block
 			// e.printStackTrace();
 		}
-		venueDB.put(id, data);
+
 	}
 
-	public static void resetDatabases() {
+	public QuadTree<Spot> getDb() {
+		return spotDB;
+	}
 
-		venueDB = new HashMap<Long, JSONObject>();
+	public void setDb(QuadTree<Spot> d) {
+		this.spotDB = d;
+	}
+
+	public void resetDatabases() {
+
 		spotDB = new QuadTree<Spot>();
 
 	}
 
-	public static void populateDatabases(int metroCode) throws JSONException {
+	public void populateDatabase(long metroCode) throws JSONException {
 
-		populateDatabases(metroCode, 1);
+		populateDatabase(metroCode, 1);
+		loadedCities.put(metroCode, LocationService.getInstance()
+				.getCity(metroCode));
 
 	}
 
-	public static JSONObject getVenue(long id) {
+	public JSONArray venueListByGeo(Double minLat, Double maxLat, Double minLon,
+			Double maxLon) {
 
-		return venueDB.get(id);
-	}
-
-	public static JSONArray venueListByGeo(Double minLat, Double maxLat,
-			Double minLon, Double maxLon) {
-
-		// if (venueDB.size() == 0) {
-		// try {
-		// // populateDatabases(24426);
-		// } catch (JSONException e) {
-		// // TODO Auto-generated catch block
-		// e.printStackTrace();
-		// }
-		// }
 		Spot min = new Spot(minLat, minLon, 1);
 		Spot max = new Spot(maxLat, maxLon, 1);
 		Interval2D range = new Interval2D(min, max);
 		LinkedList<Spot> spots = spotDB.query2D(range);
 		JSONArray rv = new JSONArray();
 		for (Spot s : spots) {
-			rv.put(venueDB.get(s.getId()));
+			rv.put(s.toJson());
 		}
 		return rv;
 	}
 
-	public static void populateDatabases(int metroCode, int page)
-			throws JSONException {
+	public void populateDatabase(long metroCode, int page) throws JSONException {
 
 		JSONObject data = new JSONObject(SongKickAPI.getMetroData(metroCode, page));
 		JSONObject resultsPage = data.getJSONObject("resultsPage");
@@ -92,7 +102,7 @@ public class Databases {
 					} catch (Exception e) {
 						// System.err.println("Error in parsing:" + venue);
 					}
-					if (venueId != -1 && getVenue(venueId) == null) {
+					if (venueId != -1) {
 						try {
 							storeVenueToMemory(venue.getDouble("lat"),
 									venue.getDouble("lng"), venue.getLong("id"), venue);
@@ -104,16 +114,18 @@ public class Databases {
 				}
 			}
 			page++;
-			populateDatabases(metroCode, page);
+			populateDatabase(metroCode, page);
 		}
 
 	}
 
 	public static void main(String[] args) {
 
+		SpotDb spots = new SpotDb();
 		try {
-			populateDatabases(24426);
-			JSONArray venues = venueListByGeo(51.4846, 51.5067, -0.1778, -0.1346);
+			spots.populateDatabase(24426);
+			JSONArray venues = spots.venueListByGeo(51.4846, 51.5067, -0.1778,
+					-0.1346);
 			int i = 1;
 		} catch (JSONException e) {
 			// TODO Auto-generated catch block
