@@ -285,26 +285,26 @@ function isOkToAdd(id) {
   }
 }
 
-function niceInfo(title,link,id) {
-  var x = '<div id="title">'+title+'</div>';
+function niceInfo(id) {
+  //var x = '<div id="title">'+title+'</div>';
   var z = '<div id="events_'+id+'">Loading...</div>';
-  var l = '<div id="link"><a href="'+link+'" target="_blank">About the Venue</a></div>';
+  //var l = '<div id="link"><a href="'+link+'" target="_blank">About the Venue</a></div>';
   // TODO: Attach the following to link click above
   // _gaq.push(['_trackEvent', 'Venue', 'Click', title]);
   //console.log("building box for "+ id);
-  return x+z+l;
+  return z;
 }
-function addMarker(map,lat,lon,title,id,link){
+function addMarker(map,lat,lon,id){
 //var poz  = new google.maps.LatLng(51.51376,-0.14364);
   var poz  = new google.maps.LatLng(lat,lon);
     var marker = new google.maps.Marker({
     	position: poz,
-    	map:map,
-    	title: title});
+    	map:map
+    	});
  
     marker.setMap(map);
   
-    var infowindow = new google.maps.InfoWindow({maxWidth:200, content: niceInfo(title,link,id)});
+    var infowindow = new google.maps.InfoWindow({maxWidth:200, content: niceInfo(id)});
     google.maps.event.addListener(marker, 'click', function() {
       infowindow.open(map,marker);
       _gaq.push(['_trackEvent', 'Info', 'Show']);
@@ -336,8 +336,10 @@ function getVenues(bounds) {
   jQuery.getJSON( '/venues', bounds,function(a){
     for (var i=0;i<a.length;i++) {
       var e = a[i];
-      if (isOkToAdd(e.id))
-      addMarker(map,e.lat,e.lng,e.displayName,e.id,e.uri);
+      if (isOkToAdd(e.id)) {
+    	 // console.log(e.lat + ":" + e.lon);
+    	  addMarker(map,e.lat,e.lon,e.id);
+      }
       }
     })
     _gaq.push(['_trackEvent', 'Venue', 'Get']);

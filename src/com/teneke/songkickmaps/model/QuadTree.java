@@ -10,7 +10,7 @@ public class QuadTree<Key extends Comparable<Spot>> implements Serializable {
    */
 	private static final long serialVersionUID = 1L;
 
-	private Node root;
+	protected Node root;
 
 	// helper node data type
 	private class Node implements Serializable {
@@ -24,6 +24,34 @@ public class QuadTree<Key extends Comparable<Spot>> implements Serializable {
 			this.s = incoming;
 		}
 
+	}
+
+	public void insertSpotDB(QuadTree<Key> incoming) {
+		Node parent = incoming.root;
+		root = insertNode(root, parent);
+	}
+
+	private Node insertNode(Node o, Node n) {
+
+		if (o == null) {
+			return n;
+		} else if (less(n.s.getLon(), o.s.getLon())
+				&& less(n.s.getLat(), o.s.getLat())) {
+			o.SW = insertNode(o.SW, n);
+		} else if (less(n.s.getLon(), o.s.getLon())
+				&& !less(n.s.getLat(), o.s.getLat())) {
+			o.NW = insertNode(o.NW, n);
+		} else if (!less(n.s.getLon(), o.s.getLon())
+				&& less(n.s.getLat(), o.s.getLat())) {
+			o.SE = insertNode(o.SE, n);
+		} else if (!less(n.s.getLon(), o.s.getLon())
+				&& !less(n.s.getLat(), o.s.getLat()) && n.s.getId() != o.s.getId()) {
+			o.NE = insertNode(o.NE, n);
+		} else {
+			o.count = o.count - n.count;
+		}
+		o.count = o.count + n.count;
+		return o;
 	}
 
 	public long size() {

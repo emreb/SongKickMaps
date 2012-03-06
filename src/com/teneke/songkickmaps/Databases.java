@@ -1,21 +1,18 @@
 package com.teneke.songkickmaps;
 
-import java.util.HashMap;
 import java.util.LinkedList;
 
 import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 
+import com.teneke.songkickmaps.db.MemCachePopulator;
 import com.teneke.songkickmaps.model.Interval2D;
 import com.teneke.songkickmaps.model.QuadTree;
 import com.teneke.songkickmaps.model.Spot;
 
 public class Databases {
 
-	private static HashMap<Long, JSONObject> venueDB = new HashMap<Long, JSONObject>();
-
-	private static QuadTree<Spot> spotDB = new QuadTree<Spot>();
+	private static QuadTree<Spot> spotDB = MemCachePopulator
+			.getSpotDbForInstance();
 
 	// Get instance, singleton
 	// Load from memcache the singleton
@@ -24,15 +21,14 @@ public class Databases {
 
 	public static void resetDatabases() {
 
-		venueDB = new HashMap<Long, JSONObject>();
-		spotDB = new QuadTree<Spot>();
+		spotDB = MemCachePopulator.getSpotDbForInstance();
 
 	}
 
-	public static JSONObject getVenue(long id) {
-
-		return venueDB.get(id);
-	}
+	// public static JSONObject getVenue(long id) {
+	//
+	// return venueDB.get(id);
+	// }
 
 	public static JSONArray venueListByGeo(Double minLat, Double maxLat,
 			Double minLon, Double maxLon) {
@@ -43,20 +39,9 @@ public class Databases {
 		LinkedList<Spot> spots = spotDB.query2D(range);
 		JSONArray rv = new JSONArray();
 		for (Spot s : spots) {
-			rv.put(venueDB.get(s.getId()));
+			rv.put(s.toJson());
 		}
 		return rv;
 	}
 
-	public static void main(String[] args) {
-
-		try {
-			populateDatabases(24426);
-			JSONArray venues = venueListByGeo(51.4846, 51.5067, -0.1778, -0.1346);
-			int i = 1;
-		} catch (JSONException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
 }

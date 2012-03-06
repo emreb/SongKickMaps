@@ -33,11 +33,7 @@ public class SpotDb implements Serializable {
 		return _instance;
 	}
 
-	public SpotDb() {
-
-	}
-
-	private void storeVenueToMemory(double lat, double lon, long id,
+	public void storeVenueToMemory(double lat, double lon, long id,
 			JSONObject data) {
 
 		Spot s = new Spot(lat, lon, id);

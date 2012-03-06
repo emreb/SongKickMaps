@@ -1,5 +1,7 @@
 package com.teneke.songkickmaps.db;
 
+import java.util.LinkedList;
+
 import org.json.JSONException;
 
 import com.teneke.songkickmaps.LocationService;
@@ -34,11 +36,17 @@ public class MemCachePopulator {
 
 	}
 
-	public QuadTree<Spot> getSpotDbForInstance() {
+	public static QuadTree<Spot> getSpotDbForInstance() {
 		// find all the cities in memcache
+		LinkedList<City> cities = MemCacheDB.getLoadedCities();
 		// Append to a single quatree
+		QuadTree<Spot> spots = new QuadTree<Spot>();
+		for (City c : cities) {
+			QuadTree<Spot> cityDb = MemCacheDB.getCitySpots(c.getId());
+			spots.insertSpotDB(cityDb);
+		}
 		// Return quadtree for servlet use
-		return null;
+		return spots;
 	}
 
 	public static void main(String[] args) {

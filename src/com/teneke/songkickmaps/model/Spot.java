@@ -103,7 +103,7 @@ public class Spot implements Comparable<Spot>, Serializable {
 		} catch (Exception e) {
 
 		}
-		return null;
+		return j;
 	}
 
 }

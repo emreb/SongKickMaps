@@ -14,13 +14,24 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
 	</servlet-mapping>
 	
 	<servlet>
-        <servlet-name>Initializer</servlet-name>
-        <servlet-class>com.teneke.songkickmaps.servlet.InitializerServlet</servlet-class>
-        <load-on-startup>0</load-on-startup>
+        <servlet-name>MemPopulator</servlet-name>
+        <servlet-class>com.teneke.songkickmaps.servlet.MemPopulatorServlet</servlet-class>
+        
     </servlet>
     <servlet-mapping>
-        <servlet-name>Initializer</servlet-name>
-        <url-pattern>/admin/init</url-pattern>
+        <servlet-name>MemPopulator</servlet-name>
+        <url-pattern>/_ah/start</url-pattern>
+        
+    </servlet-mapping>
+    
+	<servlet>
+        <servlet-name>Resetter</servlet-name>
+        <servlet-class>com.teneke.songkickmaps.servlet.InitializerServlet</servlet-class>
+        
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>Resetter</servlet-name>
+        <url-pattern>/admin/reset</url-pattern>
         
     </servlet-mapping>
     <servlet>

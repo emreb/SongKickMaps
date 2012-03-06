@@ -7,8 +7,11 @@ import org.junit.Before;
 import org.junit.Test;
 
 import com.teneke.songkickmaps.Databases;
+import com.teneke.songkickmaps.db.SpotDb;
 
 public class TestDatabases {
+
+	SpotDb spots = new SpotDb();
 
 	@Before
 	public void testPopulate() throws JSONException {
@@ -19,7 +22,7 @@ public class TestDatabases {
 				jo.put("lat", i);
 				jo.put("lng", j);
 				jo.put("id", id);
-				Databases.storeVenueToMemory(i, j, id, jo);
+				spots.storeVenueToMemory(i, j, id, jo);
 				id++;
 			}
 		}
