@@ -1,0 +1,7 @@
+<backends>
+ <backend name="memdb">
+   <class>B1</class>
+   <instances>1</instances>
+   <dynamic>true</dynamic>
+ </backend>
+</backends>
