@@ -66,3 +66,15 @@ html { height: 100% }
       .city.active {
         background-color: rgba(248, 0, 70, 0.3);
       }
+      .infoWindow {
+        width:500px;  
+        height:300px;
+      }
+      .event {
+        font-size: 12px;
+      }
+      .venue {
+        width: 500px;
+      
+        font-family: lemon;
+      }

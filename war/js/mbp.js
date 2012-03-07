@@ -287,16 +287,11 @@ function isOkToAdd(id) {
 }
 
 function niceInfo(id) {
-  //var x = '<div id="title">'+title+'</div>';
-  var z = '<div id="events_'+id+'">Loading...</div>';
-  //var l = '<div id="link"><a href="'+link+'" target="_blank">About the Venue</a></div>';
-  // TODO: Attach the following to link click above
-  // _gaq.push(['_trackEvent', 'Venue', 'Click', title]);
-  //console.log("building box for "+ id);
+  var z = '<div class="infoWindow" id="events_'+id+'">Loading...</div>';
   return z;
 }
+
 function addMarker(map,lat,lon,id){
-//var poz  = new google.maps.LatLng(51.51376,-0.14364);
   var poz  = new google.maps.LatLng(lat,lon);
     var marker = new google.maps.Marker({
     	position: poz,
@@ -305,28 +300,30 @@ function addMarker(map,lat,lon,id){
  
     marker.setMap(map);
   
-    var infowindow = new google.maps.InfoWindow({maxWidth:200, content: niceInfo(id)});
+    var infowindow = new google.maps.InfoWindow({maxWidth:500, content: niceInfo(id)});
     google.maps.event.addListener(marker, 'click', function() {
       infowindow.open(map,marker);
       _gaq.push(['_trackEvent', 'Info', 'Show']);
     });
     google.maps.event.addListener(infowindow,'domready',function(){
-      getEvents({id:id},jQuery('#events_'+id));
+      getEvents(id,jQuery('#events_'+id));
     });
 }
 
 
-function getEvents(venueId,div) {
-  jQuery.getJSON( '/events', venueId,function(a){
+function getEvents(id,div) {
+  jQuery.getJSON( '/events', {id:id},function(a){
     var events = a.resultsPage.results.event;
     //console.log(events.length);
     //console.log(events);
 	var thisHtml = '';
+	var v = events[0].venue;
+	thisHtml += '<div class="venue">'+v.displayName+'</div>';
     for (var i=0; i<events.length;i++) {
 	//console.log(div);
-	thisHtml += '<a href="'+events[i].uri+'" target="_blank">'+events[i].displayName+'</a>';
+	thisHtml += '<div class="event"><a href="'+events[i].uri+'" target="_blank">'+events[i].displayName+'</a></div>';
 	// TODO: Attach the following to link click above
-  // _gaq.push(['_trackEvent', 'Event', 'Click', title]);
+  // _gaq.push(['_trackEvent', 'Event', 'ClickOut', title]);
     }
 	div.html(thisHtml);
   })
