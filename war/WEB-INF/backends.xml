@@ -4,6 +4,7 @@
    <instances>1</instances>
    <options>
    <dynamic>true</dynamic>
+   <public>true</public>
    </options>
  </backend>
 </backends>
