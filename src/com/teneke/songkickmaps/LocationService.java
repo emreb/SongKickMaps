@@ -28,12 +28,15 @@ public class LocationService {
 				-122.4176);
 		final City boston = new City("Boston", 18842, 42.3592, -71.0591);
 		final City chicago = new City("Chicago", 9426, 41.8789, -87.6291);
+		final City losangeles = new City("LosAngeles", 17835, 34.05227, -118.24304);
 
 		cities.add(london);
 		cities.add(newyork);
+		cities.add(losangeles);
 		cities.add(sanfrancisco);
 		cities.add(boston);
 		cities.add(chicago);
+
 	}
 
 	public static LocationService getInstance() {

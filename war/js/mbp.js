@@ -183,6 +183,7 @@ function presetCities() {
   var cities = [{name: "NewYork", lat: 40.7512, lon: -73.9885},
                 {name: "London", lat: 51.50832, lon: -0.12774},
                 {name: "SanFrancisco", lat: 37.7770, lon: -122.4176},
+                {name: "LosAngeles", lat: 34.05227, lon:-118.24304},
                 {name: "Boston", lat: 42.3592, lon: -71.0591},
                 {name: "Chicago", lat: 41.8789, lon: -87.6291}];
   return cities;
