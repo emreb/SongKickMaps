@@ -72,6 +72,7 @@ html { height: 100% }
       }
       .event {
         font-size: 13px;
+        margin: 4px;
       }
       .venue {
         width: 500px;
