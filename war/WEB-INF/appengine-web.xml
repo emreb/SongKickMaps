@@ -7,9 +7,17 @@
     By default, App Engine sends requests serially to a given web server.
     To allow App Engine to send multiple requests in parallel specify:
 -->
-      <threadsafe>true</threadsafe>
+  <threadsafe>true</threadsafe>
 
  
+    <static-files>
+        <include path="/favicon.ico" expiration="5d" />
+        <include path="/js/**.js" />
+        <include path="/img/**.jpg" />
+        <include path="/css/**.css" />
+        <include path="/index.html" />
+    </static-files>
+    
   <!-- Configure java.util.logging -->
   <system-properties>
     <property name="java.util.logging.config.file" value="WEB-INF/logging.properties"/> 
