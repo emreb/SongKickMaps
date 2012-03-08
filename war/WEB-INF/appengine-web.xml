@@ -12,7 +12,7 @@
  
     <static-files>
         <include path="/favicon.ico" expiration="5d" />
-        <include path="/js/**.js" />
+        <include path="/js/**" />
         <include path="/img/**.jpg" />
         <include path="/css/**.css" />
         <include path="/index.html" />
