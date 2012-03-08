@@ -172,6 +172,7 @@ function handleNoGeolocation(errorFlag) {
 
    // var infowindow = new google.maps.InfoWindow(options);
     map.setCenter(options.position);
+    $('#cityDropDown').val("London");
 }
 
 function findDistance(cLat,cLon,tLat,tLon) {
@@ -185,7 +186,11 @@ function presetCities() {
                 {name: "SanFrancisco", lat: 37.7770, lon: -122.4176},
                 {name: "LosAngeles", lat: 34.05227, lon:-118.24304},
                 {name: "Boston", lat: 42.3592, lon: -71.0591},
-                {name: "Chicago", lat: 41.8789, lon: -87.6291}];
+                {name: "Chicago", lat: 41.8789, lon: -87.6291},
+                {name: "Paris", lat: 48.85672, lon: 2.35242},
+                {name: "Philadelphia", lat: 39.95263, lon: -75.16346},
+                {name: "Washington", lat: 38.9005, lon: -77.0362}];
+                
   return cities;
 }
 function findNearestCity(position) {
@@ -229,9 +234,8 @@ function initialize() {
     if(navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(function(position) {
         var city = findNearestCity(position);
-        var pos = new google.maps.LatLng(city.lat,city.lon);
-        $(".city").removeClass('active');
-        $("#link"+city.name).addClass('active');
+        var pos = new google.maps.LatLng(city.lat,city.lon);      
+        $('#cityDropDown').val(city.name);
 
        /* var infowindow = new google.maps.InfoWindow({
           map: map,
@@ -248,7 +252,7 @@ function initialize() {
       handleNoGeolocation(false);
     }
     google.maps.event.addListener(map, 'idle', function() {
-      if (map.zoom > 13) {
+     if (map.zoom > 12) {
         getVenues(getBounds());
         $('#alertWindow').text('');
         $('#alertWindow').hide();
@@ -258,20 +262,7 @@ function initialize() {
       }
     }); 
     
-    
-    var cities = presetCities();
-    
-    
-    $(".city").click(function() {
-      var city = $(this).data("city");
-      for (var i=0; i<cities.length;i++) {
-        if (cities[i].name === city){
-          map.setCenter(new google.maps.LatLng(cities[i].lat, cities[i].lon));
-        }
-       }
-      $(".city").removeClass('active');
-      $(this).addClass('active');
-    })
+  
 }
 
 
@@ -353,6 +344,18 @@ function afterRendering() {
   if (!isMobile()) {
     $('#forkMe').show();
   }
+  $("#cityDropDown").change(function() {
+    var cities = presetCities();
+    var city = $("#cityDropDown").val()
+    for (var i=0; i<cities.length;i++) {
+      if (cities[i].name === city){
+        map.setCenter(new google.maps.LatLng(cities[i].lat, cities[i].lon));
+      }
+     }
+    });
+  
+  
+  
 }
 
 var map;

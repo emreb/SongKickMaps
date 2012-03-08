@@ -29,17 +29,23 @@
     <div id="header">
      <div id="logo">MusicByMap</div>
      <span id="alertWindow"></span>
-     <div id="cities">
-         <div class="city" id="linkLondon" data-city="London"><u>London</u></div>
-         <div class="city" id="linkNewYork" data-city="NewYork"><u>New York</u></div>
-         <div class="city" id="linkLosAngeles" data-city="LosAngeles"><u>Los Angeles</u></div>
-         <div class="city" id="linkSanFrancisco" data-city="SanFrancisco"><u>San Francisco</u></div>
-         <div class="city" id="linkBoston" data-city="Boston"><u>Boston</u></div>
-         <div class="city" id="linkChicago" data-city="Chicago"><u>Chicago</u></div>
+     <div>
+     <select id="cityDropDown">
+         <option id="linkBoston" value="Boston">Boston</option>
+         <option id="linkChicago" value="Chicago">Chicago</option>
+         <option id="linkLondon" value="London">London</option>
+         <option id="linkLosAngeles" value="LosAngeles">Los Angeles</option>
+         <option id="linkNewYork" value="NewYork">New York</option>
+         <option id="linkParis" value="Paris">Paris</option>
+         <option id="linkPhiladelphia" value="Philadelphia">Philadephia</option>
+         <option id="linkSanFrancisco" value="SanFrancisco">San Francisco</option>
+         <option id="linkWashinton" value="Washington">Washington, D.C.</option>
+         
+     </select>
      </div>
     </div>
-    <div id="forkMe" style="display: none;"><a href="http://github.com/emreb/songkickmaps"><img style="position: absolute; top: 0; right: 0; border: 0; z-index: 2;" src="https://a248.e.akamai.net/assets.github.com/img/abad93f42020b733148435e2cd92ce15c542d320/687474703a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f677265656e5f3030373230302e706e67" alt="Fork me on GitHub"></a></div>
-    <div id="mapDiv">
+    <!--  <div id="forkMe" style="display: none;"><a href="http://github.com/emreb/songkickmaps"><img style="position: absolute; top: 0; right: 0; border: 0; z-index: 2;" src="https://a248.e.akamai.net/assets.github.com/img/abad93f42020b733148435e2cd92ce15c542d320/687474703a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f677265656e5f3030373230302e706e67" alt="Fork me on GitHub"></a></div> -->
+     <div id="mapDiv">
         <div id="map_canvas" style="width:100%; height:100%;"></div>
     </div>
     <div id="footer">
