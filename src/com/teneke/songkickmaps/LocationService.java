@@ -7,93 +7,128 @@ import com.teneke.songkickmaps.model.Spot;
 
 public class LocationService {
 
-	private ArrayList<City> cities = null;
+  private ArrayList<City> cities = null;
+  private static final double MAX_CITY_RANGE = 0.7103247578572764;
 
-	private static LocationService _instance = null;
+  private static LocationService _instance = null;
 
-	private LocationService() {
-		// {name: "NewYork", lat: 40.7512, lon: -73.9885},
-		// {name: "London", lat: 51.50832, lon: -0.12774},
-		// {name: "SanFrancisco", lat: 37.7770, lon: -122.4176},
-		// {name: "Boston", lat: 42.3592, lon: -71.0591},
-		// {name: "Chicago", lat: 41.8789, lon: -87.6291}];
-		// London, SF, NYC, Boston, Chicago
-		// int[] cities = { 24426, 26330, 7644, 18842, 9426 };
+  private LocationService() {
 
-		cities = new ArrayList();
+    // {name: "NewYork", lat: 40.7512, lon: -73.9885},
+    // {name: "London", lat: 51.50832, lon: -0.12774},
+    // {name: "SanFrancisco", lat: 37.7770, lon: -122.4176},
+    // {name: "Boston", lat: 42.3592, lon: -71.0591},
+    // {name: "Chicago", lat: 41.8789, lon: -87.6291}];
+    // London, SF, NYC, Boston, Chicago
+    // int[] cities = { 24426, 26330, 7644, 18842, 9426 };
 
-		final City london = new City("London", 24426, 51.50832, -0.12774);
-		final City newyork = new City("NewYork", 7644, 40.7512, -73.9885);
-		final City sanfrancisco = new City("SanFrancisco", 26330, 37.7770,
-				-122.4176);
-		final City boston = new City("Boston", 18842, 42.3592, -71.0591);
-		final City chicago = new City("Chicago", 9426, 41.8789, -87.6291);
-		final City losangeles = new City("LosAngeles", 17835, 34.05227, -118.24304);
+    cities = new ArrayList<City>();
 
-		cities.add(london);
-		cities.add(newyork);
-		cities.add(losangeles);
-		cities.add(sanfrancisco);
-		cities.add(boston);
-		cities.add(chicago);
+    final City london = new City("London", 24426, 51.50832, -0.12774);
+    final City newyork = new City("NewYork", 7644, 40.7512, -73.9885);
+    final City sanfrancisco =
+        new City("SanFrancisco", 26330, 37.7770, -122.4176);
+    final City boston = new City("Boston", 18842, 42.3592, -71.0591);
+    final City chicago = new City("Chicago", 9426, 41.8789, -87.6291);
+    final City losangeles = new City("LosAngeles", 17835, 34.05227, -118.24304);
+    final City paris = new City("Paris", 28909, 48.85672, 2.35242);
+    final City philadelphia =
+        new City("Philadelphia", 5202, 39.95263, -75.16346);
+    final City washington = new City("Washington", 1409, 38.9005, -77.0362);
 
-	}
+    cities.add(london);
+    cities.add(sanfrancisco);
+    cities.add(newyork);
+    cities.add(losangeles);
+    cities.add(philadelphia);
+    cities.add(boston);
+    cities.add(chicago);
+    cities.add(washington);
+    cities.add(paris);
 
-	public static LocationService getInstance() {
-		if (_instance == null) {
-			_instance = new LocationService();
-		}
-		return _instance;
-	}
+  }
 
-	public ArrayList<City> getCities() {
-		return cities;
-	}
+  public static LocationService getInstance() {
 
-	public City nearestCity(Spot s) {
+    if (_instance == null) {
+      _instance = new LocationService();
+    }
+    return _instance;
+  }
 
-		City nearest = null;
-		double minDistance = 0.0;
-		for (int i = 0; i < cities.size(); i++) {
-			Spot c = new Spot(cities.get(i).getLat(), cities.get(i).getLon(), cities
-					.get(i).getId());
-			if (i == 0) {
-				nearest = cities.get(i);
-				minDistance = GetDistance(c, s);
-			} else {
-				double distance = GetDistance(c, s);
-				if (distance < minDistance) {
-					nearest = cities.get(i);
-					minDistance = distance;
-				}
-			}
-		}
-		return nearest;
-	}
+  public ArrayList<City> getCities() {
 
-	public City getCity(long metroCode) {
-		for (City c : cities) {
-			if (c.getId() == metroCode) {
-				return c;
-			}
-		}
-		return null;
-	}
+    return cities;
+  }
 
-	public City getCity(String name) {
-		for (City c : cities) {
-			if (c.getName().equals(name)) {
-				return c;
-			}
-		}
-		return null;
-	}
+  public City nearestCity(Spot s) {
 
-	public static double GetDistance(Spot a, Spot b) {
+    City nearest = null;
+    double minDistance = 0.0;
+    for (int i = 0; i < cities.size(); i++) {
+      Spot c =
+          new Spot(cities.get(i).getLat(), cities.get(i).getLon(), cities
+              .get(i).getId());
+      if (i == 0) {
+        nearest = cities.get(i);
+        minDistance = GetDistance(c, s);
+      } else {
+        double distance = GetDistance(c, s);
+        if (distance < minDistance) {
+          nearest = cities.get(i);
+          minDistance = distance;
+        }
+      }
+    }
+    return nearest;
+  }
 
-		double lat = Math.pow((a.getLat() - b.getLat()), 2);
-		double lon = Math.pow((a.getLon() - b.getLon()), 2);
-		return Math.sqrt(lat + lon);
+  public City getCity(long metroCode) {
 
-	}
+    for (City c : cities) {
+      if (c.getId() == metroCode) {
+        return c;
+      }
+    }
+    return null;
+  }
+
+  public City getCity(String name) {
+
+    for (City c : cities) {
+      if (c.getName().equals(name)) {
+        return c;
+      }
+    }
+    return null;
+  }
+
+  public static double GetDistance(Spot a, Spot b) {
+
+    double lat = Math.pow((a.getLat() - b.getLat()), 2);
+    double lon = Math.pow((a.getLon() - b.getLon()), 2);
+    return Math.sqrt(lat + lon);
+  }
+
+  public static double GetDistance(City c, Spot s) {
+
+    Spot a = new Spot(c.getLat(), c.getLon(), 1);
+    return GetDistance(a, s);
+  }
+
+  public static void main(String[] args) {
+
+    Spot ny = new Spot(40.7512, -73.9885, 1);
+    Spot pa = new Spot(39.95263, -75.16346, 1);
+    System.out.println(GetDistance(ny, pa) / 2);
+  }
+
+  public static boolean isLessThanRange(City c, Spot v) {
+
+    if (GetDistance(c, v) < MAX_CITY_RANGE) {
+      return true;
+    } else {
+      return false;
+    }
+  }
 }
