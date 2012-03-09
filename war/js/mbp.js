@@ -311,8 +311,12 @@ function getEvents(id,div) {
 	var v = events[0].venue;
 	thisHtml += '<div class="venue">'+v.displayName+'</div>';
     for (var i=0; i<events.length;i++) {
-	//console.log(div);
-	thisHtml += '<div class="event"><a href="'+events[i].uri+'" target="_blank">'+events[i].displayName+'</a></div>';
+      var eventName = events[i].displayName;
+//      var eventDateExtractor = new RegExp("\\w*(.*)\\w*");
+//      var eventDate = eventDateExtractor.exec(eventName);
+      //myString.replace(myregexp, "replacement")
+//      alert(eventDate);
+      thisHtml += '<div class="event"><a href="'+events[i].uri+'" target="_blank">'+eventName+'</a></div>';
 	// TODO: Attach the following to link click above
   // _gaq.push(['_trackEvent', 'Event', 'ClickOut', title]);
     }
@@ -353,8 +357,6 @@ function afterRendering() {
       }
      }
     });
-  
-  
   
 }
 

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:fb="http://ogp.me/ns/fb#">
   <head>
     <link href='http://fonts.googleapis.com/css?family=Lemon' rel='stylesheet' type='text/css'>
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
@@ -26,6 +26,15 @@
   </head>
 
   <body>
+  <div id="fb-root"></div>
+    <script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/all.js#xfbml=1&appId=173715422709083";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
     <div id="header">
      <div id="logo">MusicByMap</div>
      <span id="alertWindow"></span>
@@ -49,6 +58,7 @@
         <div id="map_canvas" style="width:100%; height:100%;"></div>
     </div>
     <div id="footer">
+    <div style="float: left;"><fb:like send="true" width="450" show_faces="true"></fb:like></div>
             <div style="float: right;"><img  src="img/sk.jpg"></div>
         </div>
   </body>
