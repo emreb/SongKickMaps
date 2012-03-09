@@ -231,6 +231,7 @@ function initialize() {
     map = new google.maps.Map(document.getElementById('map_canvas'),
         myOptions);
 
+    handleNoGeolocation(null);
     // Try HTML5 geolocation
     if(navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(function(position) {
