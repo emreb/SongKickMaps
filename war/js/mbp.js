@@ -294,10 +294,11 @@ function addMarker(map,lat,lon,id){
     var infowindow = new google.maps.InfoWindow({maxWidth:500, content: niceInfo(id)});
     google.maps.event.addListener(marker, 'click', function() {
       infowindow.open(map,marker);
-      _gaq.push(['_trackEvent', 'Info', 'Show']);
+      
     });
     google.maps.event.addListener(infowindow,'domready',function(){
       getEvents(id,jQuery('#events_'+id));
+      window._gaq.push(['_trackPageview', '/showVenueEvents/'+id]);
     });
 }
 
