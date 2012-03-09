@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<cronentries>
+  <cron>
+    <url>/_ah/start</url>
+    <description>Update the database</description>
+    <schedule>every 3 hours</schedule>
+    <target>memdb</target>
+  </cron>
+</cronentries>

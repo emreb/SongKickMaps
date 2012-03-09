@@ -1,8 +1,9 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:fb="http://ogp.me/ns/fb#">
   <head>
+    <link href='http://fonts.googleapis.com/css?family=Lemon' rel='stylesheet' type='text/css'>
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
-    <title>SongKickMaps</title>
+    <title>Music By Map</title>
     <script type="text/javascript">
 
   var _gaq = _gaq || [];
@@ -17,29 +18,51 @@
 
 </script>
   <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
-    <style type="text/css">
-      html { height: 100% }
-      body { height: 100%; margin: 0; padding: 0 }
-      #map_canvas { height: 100% }
-    </style>
-      <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
-    <script type="text/javascript"
-      src="http://maps.googleapis.com/maps/api/js?key=AIzaSyAiKlS6TFvybq2qgL-lbiKNSnk0oNDOv_g&sensor=true">
-    </script>
-    <script type="text/javascript"
-      src="js/skm.js">
-    </script> 
+    <link rel="stylesheet" type="text/css" href="css/styles.css">
+    <link href='css/chosen.css' rel='stylesheet' type='text/css'>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+    <script type="text/javascript" src="js/chosen.jquery.min.js"></script>
+    <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=AIzaSyAiKlS6TFvybq2qgL-lbiKNSnk0oNDOv_g&sensor=true"></script>
+    <script type="text/javascript" src="js/mbp.js"></script> 
   </head>
 
   <body>
-    <div>SongKickMaps </div>
-    <span id="alertWindow"></span>
+  <div id="fb-root"></div>
+    <script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/all.js#xfbml=1&appId=173715422709083";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
 
-    
-  
-    
-  <body >
-    <div id="map_canvas" style="width:100%; height:100%"></div>
+    <div id="header">
+     <div id="logo">MusicByMap</div>
+     <span id="alertWindow"></span>
+     <div class="cityDropDown">
+     <select id="cityDropDown">
+         <option id="linkBoston" value="Boston">Boston</option>
+         <option id="linkChicago" value="Chicago">Chicago</option>
+         <option id="linkLondon" value="London">London</option>
+         <option id="linkLosAngeles" value="LosAngeles">Los Angeles</option>
+         <option id="linkMiami" value="Miami">Miami</option>
+         <option id="linkNewYork" value="NewYork">New York</option>
+         <option id="linkParis" value="Paris">Paris</option>
+         <option id="linkPhiladelphia" value="Philadelphia">Philadephia</option>
+         <option id="linkSanFrancisco" value="SanFrancisco">San Francisco</option>
+         <option id="linkWashinton" value="Washington">Washington, D.C.</option>
+         
+     </select>
+     </div>
+    </div>
+    <!--  <div id="forkMe" style="display: none;"><a href="http://github.com/emreb/songkickmaps"><img style="position: absolute; top: 0; right: 0; border: 0; z-index: 2;" src="https://a248.e.akamai.net/assets.github.com/img/abad93f42020b733148435e2cd92ce15c542d320/687474703a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f677265656e5f3030373230302e706e67" alt="Fork me on GitHub"></a></div> -->
+     <div id="mapDiv">
+        <div id="map_canvas" style="width:100%; height:100%;"></div>
+    </div>
+    <div id="footer">
+    <div style="float: left;"><fb:like send="false" width="450" show_faces="true"></fb:like></div>
+            <div style="float: right;"><img  src="img/sk.jpg"></div>
+        </div>
   </body>
 </html>
  
