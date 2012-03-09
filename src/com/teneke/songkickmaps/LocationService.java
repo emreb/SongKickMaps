@@ -28,6 +28,7 @@ public class LocationService {
         new City("Philadelphia", 5202, 39.95263, -75.16346);
     final City washington = new City("Washington", 1409, 38.9005, -77.0362);
     final City miami = new City("Miami", 9776, 25.7891, -80.2257);
+    final City berlin = new City("Berlin", 28443, 52.52677, 13.4069);
 
     cities.add(london);
     cities.add(sanfrancisco);
@@ -39,6 +40,7 @@ public class LocationService {
     cities.add(washington);
     cities.add(paris);
     cities.add(miami);
+    cities.add(berlin);
 
   }
 

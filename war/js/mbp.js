@@ -190,6 +190,7 @@ function presetCities() {
                 {name: "Paris", lat: 48.85672, lon: 2.35242},
                 {name: "Miami", lat: 25.7915, lon: -80.131},
                 {name: "Philadelphia", lat: 39.95263, lon: -75.16346},
+                {name: "Berlin", lat: 52.52677, lon: 13.4069},
                 {name: "Washington", lat: 38.9005, lon: -77.0362}];
                 
   return cities;
