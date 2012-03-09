@@ -236,6 +236,8 @@ function initialize() {
         var city = findNearestCity(position);
         var pos = new google.maps.LatLng(city.lat,city.lon);      
         $('#cityDropDown').val(city.name);
+        
+        window._gaq.push(['_trackEvent', 'City', city.name]);
 
        /* var infowindow = new google.maps.InfoWindow({
           map: map,
@@ -345,9 +347,7 @@ function getBounds(){
  return bounds;
 }
 function afterRendering() {
-  if (!isMobile()) {
-    $('#forkMe').show();
-  }
+ 
   $("#cityDropDown").change(function() {
     var cities = presetCities();
     var city = $("#cityDropDown").val()
@@ -356,7 +356,10 @@ function afterRendering() {
         map.setCenter(new google.maps.LatLng(cities[i].lat, cities[i].lon));
       }
      }
-    });
+    window._gaq.push(['_trackEvent', 'City', city]); 
+  });
+  
+  	
   
 }
 
