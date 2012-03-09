@@ -19,6 +19,7 @@
 </script>
   <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
     <link rel="stylesheet" type="text/css" href="css/styles.css">
+    <link href='css/chosen.css' rel='stylesheet' type='text/css'>
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
     <script type="text/javascript" src="js/chosen.jquery.min.js"></script>
     <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=AIzaSyAiKlS6TFvybq2qgL-lbiKNSnk0oNDOv_g&sensor=true"></script>
@@ -38,12 +39,13 @@
     <div id="header">
      <div id="logo">MusicByMap</div>
      <span id="alertWindow"></span>
-     <div>
+     <div class="cityDropDown">
      <select id="cityDropDown">
          <option id="linkBoston" value="Boston">Boston</option>
          <option id="linkChicago" value="Chicago">Chicago</option>
          <option id="linkLondon" value="London">London</option>
          <option id="linkLosAngeles" value="LosAngeles">Los Angeles</option>
+         <option id="linkMiami" value="Miami">Miami</option>
          <option id="linkNewYork" value="NewYork">New York</option>
          <option id="linkParis" value="Paris">Paris</option>
          <option id="linkPhiladelphia" value="Philadelphia">Philadephia</option>

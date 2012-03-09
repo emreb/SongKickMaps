@@ -14,14 +14,6 @@ public class LocationService {
 
   private LocationService() {
 
-    // {name: "NewYork", lat: 40.7512, lon: -73.9885},
-    // {name: "London", lat: 51.50832, lon: -0.12774},
-    // {name: "SanFrancisco", lat: 37.7770, lon: -122.4176},
-    // {name: "Boston", lat: 42.3592, lon: -71.0591},
-    // {name: "Chicago", lat: 41.8789, lon: -87.6291}];
-    // London, SF, NYC, Boston, Chicago
-    // int[] cities = { 24426, 26330, 7644, 18842, 9426 };
-
     cities = new ArrayList<City>();
 
     final City london = new City("London", 24426, 51.50832, -0.12774);
@@ -35,6 +27,7 @@ public class LocationService {
     final City philadelphia =
         new City("Philadelphia", 5202, 39.95263, -75.16346);
     final City washington = new City("Washington", 1409, 38.9005, -77.0362);
+    final City miami = new City("Miami", 9776, 25.7891, -80.2257);
 
     cities.add(london);
     cities.add(sanfrancisco);
@@ -45,6 +38,7 @@ public class LocationService {
     cities.add(chicago);
     cities.add(washington);
     cities.add(paris);
+    cities.add(miami);
 
   }
 

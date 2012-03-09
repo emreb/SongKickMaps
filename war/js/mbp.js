@@ -170,9 +170,9 @@ function handleNoGeolocation(errorFlag) {
       content: content
     };
 
-   // var infowindow = new google.maps.InfoWindow(options);
     map.setCenter(options.position);
     $('#cityDropDown').val("London");
+    $("#cityDropDown").chosen();
 }
 
 function findDistance(cLat,cLon,tLat,tLon) {
@@ -188,6 +188,7 @@ function presetCities() {
                 {name: "Boston", lat: 42.3592, lon: -71.0591},
                 {name: "Chicago", lat: 41.8789, lon: -87.6291},
                 {name: "Paris", lat: 48.85672, lon: 2.35242},
+                {name: "Miami", lat: 25.7915, lon: -80.131},
                 {name: "Philadelphia", lat: 39.95263, lon: -75.16346},
                 {name: "Washington", lat: 38.9005, lon: -77.0362}];
                 
@@ -236,6 +237,7 @@ function initialize() {
         var city = findNearestCity(position);
         var pos = new google.maps.LatLng(city.lat,city.lon);      
         $('#cityDropDown').val(city.name);
+        $("#cityDropDown").chosen();
         
         window._gaq.push(['_trackEvent', 'City', city.name]);
 
