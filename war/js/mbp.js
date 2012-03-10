@@ -288,11 +288,25 @@ function niceInfo(id) {
   return z;
 }
 
-function addMarker(map,lat,lon,id){
+function getMarkerUrl(type) {
+	if (type === 1) {
+		return '/img/green-dot.png';
+	} else if (type === 2) {
+		return '/img/orange-dot.png';
+	} else if (type === 3) {
+		return '/img/blue-dot.png';
+	} else {
+		return '/img/red-dot.png';
+	}
+}
+
+function addMarker(map,lat,lon,id,type){
   var poz  = new google.maps.LatLng(lat,lon);
     var marker = new google.maps.Marker({
     	position: poz,
-    	map:map
+    	map: map,
+    	animation: google.maps.Animation.DROP,
+    	icon: getMarkerUrl(type)
     	});
  
     marker.setMap(map);
@@ -338,7 +352,7 @@ function getVenues(bounds) {
       var e = a[i];
       if (isOkToAdd(e.id)) {
     	 // console.log(e.lat + ":" + e.lon);
-    	  addMarker(map,e.lat,e.lon,e.id);
+    	  addMarker(map,e.lat,e.lon,e.id,e.t);
       }
       }
     })

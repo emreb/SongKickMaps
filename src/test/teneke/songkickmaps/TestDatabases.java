@@ -2,12 +2,12 @@ package test.teneke.songkickmaps;
 
 import org.json.JSONArray;
 import org.json.JSONException;
-import org.json.JSONObject;
 import org.junit.Before;
 import org.junit.Test;
 
 import com.teneke.songkickmaps.Databases;
 import com.teneke.songkickmaps.db.SpotDb;
+import com.teneke.songkickmaps.model.Spot;
 
 public class TestDatabases {
 
@@ -18,11 +18,8 @@ public class TestDatabases {
 		int id = 1;
 		for (double i = 0; i < 10; i = i + 1) {
 			for (double j = 0; j < 10; j = j + 1) {
-				JSONObject jo = new JSONObject();
-				jo.put("lat", i);
-				jo.put("lng", j);
-				jo.put("id", id);
-				spots.storeVenueToMemory(i, j, id, jo);
+
+				spots.storeVenueToMemory(new Spot(i, j, 1));
 				id++;
 			}
 		}
