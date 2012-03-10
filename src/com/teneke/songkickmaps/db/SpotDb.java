@@ -17,135 +17,111 @@ import com.teneke.songkickmaps.model.Spot;
 
 public class SpotDb implements Serializable {
 
-  /**
+	/**
 	 * 
 	 */
-  private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-  private QuadTree<Spot> spotDB = new QuadTree<Spot>();
-  private HashMap<Long, City> loadedCities = new HashMap<Long, City>();
+	private QuadTree<Spot> spotDB = new QuadTree<Spot>();
+	private HashMap<Long, City> loadedCities = new HashMap<Long, City>();
 
-  private static SpotDb _instance;
+	private static SpotDb _instance;
 
-  public static SpotDb getInstance() {
+	public static SpotDb getInstance() {
 
-    if (_instance == null) {
-      _instance = new SpotDb();
-    }
-    return _instance;
-  }
+		if (_instance == null) {
+			_instance = new SpotDb();
+		}
+		return _instance;
+	}
 
-  public void storeVenueToMemory(
-      double lat,
-      double lon,
-      long id,
-      JSONObject data) {
+	public void storeVenueToMemory(Spot s) {
 
-    Spot s = new Spot(lat, lon, id);
-    spotDB.insert(s);
-    try {
-      if (data.get("metroArea") != JSONObject.NULL) {
-        data.remove("metroArea");
-      }
-    } catch (Exception e) {
-      // TODO Auto-generated catch block
-      // e.printStackTrace();
-    }
+		spotDB.insert(s);
 
-  }
+	}
 
-  public QuadTree<Spot> getDb() {
+	public QuadTree<Spot> getDb() {
 
-    return spotDB;
-  }
+		return spotDB;
+	}
 
-  public void setDb(QuadTree<Spot> d) {
+	public void setDb(QuadTree<Spot> d) {
 
-    this.spotDB = d;
-  }
+		this.spotDB = d;
+	}
 
-  public void resetDatabases() {
+	public void resetDatabases() {
 
-    spotDB = new QuadTree<Spot>();
+		spotDB = new QuadTree<Spot>();
 
-  }
+	}
 
-  public void populateDatabase(long metroCode) throws JSONException {
+	public void populateDatabase(long metroCode) throws JSONException {
 
-    City c = LocationService.getInstance().getCity(metroCode);
-    populateDatabase(metroCode, c, 1);
-    loadedCities.put(metroCode, c);
+		City c = LocationService.getInstance().getCity(metroCode);
+		populateDatabase(metroCode, c, 1);
+		loadedCities.put(metroCode, c);
 
-  }
+	}
 
-  public JSONArray venueListByGeo(
-      Double minLat,
-      Double maxLat,
-      Double minLon,
-      Double maxLon) {
+	public JSONArray venueListByGeo(Double minLat, Double maxLat, Double minLon,
+			Double maxLon) {
 
-    Spot min = new Spot(minLat, minLon, 1);
-    Spot max = new Spot(maxLat, maxLon, 1);
-    Interval2D range = new Interval2D(min, max);
-    LinkedList<Spot> spots = spotDB.query2D(range);
-    JSONArray rv = new JSONArray();
-    for (Spot s : spots) {
-      rv.put(s.toJson());
-    }
-    return rv;
-  }
+		Spot min = new Spot(minLat, minLon, 1);
+		Spot max = new Spot(maxLat, maxLon, 1);
+		Interval2D range = new Interval2D(min, max);
+		LinkedList<Spot> spots = spotDB.query2D(range);
+		JSONArray rv = new JSONArray();
+		for (Spot s : spots) {
+			rv.put(s.toJson());
+		}
+		return rv;
+	}
 
-  public void populateDatabase(long metroCode, City c, int page)
-      throws JSONException {
+	public void populateDatabase(long metroCode, City c, int page)
+			throws JSONException {
 
-    JSONObject data = new JSONObject(SongKickAPI.getMetroData(metroCode, page));
-    JSONObject resultsPage = data.getJSONObject("resultsPage");
-    JSONObject results = resultsPage.getJSONObject("results");
-    if (results.has("event")) {
-      JSONArray events = results.getJSONArray("event");
-      for (int i = 0; i < events.length(); i++) {
-        JSONObject event = events.getJSONObject(i);
-        JSONObject venue = event.getJSONObject("venue");
-        if (venue != JSONObject.NULL && venue.get("lat") != JSONObject.NULL
-            && venue.get("lng") != JSONObject.NULL) {
-          long venueId = -1;
-          try {
-            venueId = venue.getLong("id");
-          } catch (Exception e) {
-            // System.err.println("Error in parsing:" + venue);
-          }
-          if (venueId != -1) {
-            try {
-              Spot v =
-                  new Spot(venue.getDouble("lat"), venue.getDouble("lng"), 1);
-              if (LocationService.isLessThanRange(c, v)) {
-                storeVenueToMemory(venue.getDouble("lat"),
-                    venue.getDouble("lng"), venue.getLong("id"), venue);
-              }
-            } catch (Exception e) {
-              // TODO Auto-generated catch block
-              e.printStackTrace();
-            }
-          }
-        }
-      }
-      page++;
-      populateDatabase(metroCode, c, page);
-    }
+		JSONObject data = new JSONObject(SongKickAPI.getMetroData(metroCode, page));
+		JSONObject resultsPage = data.getJSONObject("resultsPage");
+		JSONObject results = resultsPage.getJSONObject("results");
+		if (results.has("event")) {
+			JSONArray events = results.getJSONArray("event");
+			for (int i = 0; i < events.length(); i++) {
+				JSONObject event = events.getJSONObject(i);
+				JSONObject venue = event.getJSONObject("venue");
+				if (venue != JSONObject.NULL && venue.get("lat") != JSONObject.NULL
+						&& venue.get("lng") != JSONObject.NULL) {
+					long venueId = -1;
+					String eventDate = null;
+					try {
+						venueId = venue.getLong("id");
+						eventDate = event.getJSONObject("start").getString("date");
+					} catch (Exception e) {
+						// System.err.println("Error in parsing:" + venue);
+					}
+					if (venueId != -1) {
+						try {
+							Spot v = new Spot(venue.getDouble("lat"), venue.getDouble("lng"),
+									venue.getLong("id"));
+							if (eventDate != null) {
+								v.setNextEvent(eventDate);
+							}
 
-  }
+							if (LocationService.isLessThanRange(c, v)) {
+								storeVenueToMemory(v);
+							}
+						} catch (Exception e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+					}
+				}
+			}
+			page++;
+			populateDatabase(metroCode, c, page);
+		}
 
-  public static void main(String[] args) {
+	}
 
-    SpotDb spots = new SpotDb();
-    try {
-      spots.populateDatabase(24426);
-      JSONArray venues =
-          spots.venueListByGeo(51.4846, 51.5067, -0.1778, -0.1346);
-      int i = 1;
-    } catch (JSONException e) {
-      // TODO Auto-generated catch block
-      e.printStackTrace();
-    }
-  }
 }

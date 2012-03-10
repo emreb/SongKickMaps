@@ -1,20 +1,51 @@
 package com.teneke.songkickmaps.model;
 
 import java.io.Serializable;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import org.json.JSONObject;
 
 public class Spot implements Comparable<Spot>, Serializable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private double lat;
 	private double lon;
 	private long id;
+	private int nextEvent = 0; // 1 in 24 hours, 2 in 24-week, 3 more, 0 no data
+
+	private static final long DAY = 60 * 60 * 24 * 1000L;
+	private static final long WEEK = 7 * DAY;
 
 	public Spot(double lat, double lon, long id) {
 
 		this.lat = lat;
 		this.lon = lon;
 		this.id = id;
+
+	}
+
+	public void setNextEvent(String date) {
+		DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+		try {
+			Date d = formatter.parse(date);
+			long diff = d.getTime() - System.currentTimeMillis();
+			if (diff < DAY) {
+				nextEvent = 1;
+			} else if (diff < WEEK) {
+				nextEvent = 2;
+			} else if (diff > WEEK) {
+				nextEvent = 3;
+			}
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+		}
+
 	}
 
 	public double getLat() {
@@ -100,6 +131,7 @@ public class Spot implements Comparable<Spot>, Serializable {
 			j.put("id", id);
 			j.put("lat", lat);
 			j.put("lon", lon);
+			j.put("t", this.nextEvent);
 		} catch (Exception e) {
 
 		}
