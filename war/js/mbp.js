@@ -285,6 +285,7 @@ function isOkToAdd(id) {
 
 function niceInfo(id) {
   var z = '<div class="infoWindow" id="events_'+id+'">Loading...</div>';
+
   return z;
 }
 
@@ -299,6 +300,13 @@ function getMarkerUrl(type) {
 		return '/img/red-dot.png';
 	}
 }
+var dayMarkers = [];
+var weekMarkers = [];
+var laterMarkers = [];
+
+var dayMarkerVisible = true;
+var weekMarkerVisible = true;
+var laterMarkerVisible = true;
 
 function addMarker(map,lat,lon,id,type){
   var poz  = new google.maps.LatLng(lat,lon);
@@ -308,20 +316,49 @@ function addMarker(map,lat,lon,id,type){
     	animation: google.maps.Animation.DROP,
     	icon: getMarkerUrl(type)
     	});
- 
+    
     marker.setMap(map);
-  
+    
     var infowindow = new google.maps.InfoWindow({maxWidth:500, content: niceInfo(id)});
     google.maps.event.addListener(marker, 'click', function() {
       infowindow.open(map,marker);
-      
     });
+    
     google.maps.event.addListener(infowindow,'domready',function(){
       getEvents(id,jQuery('#events_'+id));
       window._gaq.push(['_trackPageview', '/showVenueEvents/'+id]);
     });
+    if (type === 1) {
+      dayMarkers.push(marker);
+      marker.setVisible(dayMarkerVisible);
+    } else if (type === 2) {
+      weekMarkers.push(marker);
+      marker.setVisible(weekMarkerVisible);
+    } else if (type === 3) {
+      laterMarkers.push(marker);
+      marker.setVisible(laterMarkerVisible);
+    }
 }
 
+function showHideMarkers(type, showHide) {
+  if (type === "day") {
+    showHideByType(dayMarkers, showHide);
+    dayMarkerVisible = showHide;
+  } else if (type === "week") {
+    showHideByType(weekMarkers, showHide);
+    weekMarkerVisible = showHide;
+  } else if (type === "later") {
+    showHideByType(laterMarkers, showHide);
+    laterMarkerVisible = showHide;
+  }
+  
+}
+
+function showHideByType(markerArray, showHide) {
+  for (var i=0;i<markerArray.length;i++) {
+    markerArray[i].setVisible(showHide);
+  }
+}
 
 function getEvents(id,div) {
   jQuery.getJSON( '/events', {id:id},function(a){
@@ -333,14 +370,9 @@ function getEvents(id,div) {
 	thisHtml += '<div class="venue">'+v.displayName+'</div>';
     for (var i=0; i<events.length;i++) {
       var eventName = events[i].displayName;
-//      var eventDateExtractor = new RegExp("\\w*(.*)\\w*");
-//      var eventDate = eventDateExtractor.exec(eventName);
-      //myString.replace(myregexp, "replacement")
-//      alert(eventDate);
-      thisHtml += '<div class="event"><a href="'+events[i].uri+'" target="_blank">'+eventName+'</a></div>';
-	// TODO: Attach the following to link click above
-  // _gaq.push(['_trackEvent', 'Event', 'ClickOut', title]);
+      thisHtml += '<div class="event"><a href="'+events[i].uri+'" target="_blank">'+eventName+'</a></div>';      
     }
+    thisHtml += '<div class="ad"><script type="text/javascript">google_ad_client = "ca-pub-2574082172506282";google_ad_slot = "8194191755";google_ad_width = 468;google_ad_height = 60;</script><script type="text/javascript" src="http://pagead2.googlesyndication.com/pagead/show_ads.js"></script></div>';  
 	div.html(thisHtml);
   })
     _gaq.push(['_trackEvent', 'Events', 'Get']);
@@ -378,8 +410,22 @@ function afterRendering() {
     window._gaq.push(['_trackEvent', 'City', city]); 
   });
   
-  	
+  attachClickFilter("#todayEvents","day");
+  attachClickFilter("#weekEvents","week");
+  attachClickFilter("#laterEvents","later");
   
+}
+
+function attachClickFilter(divId,scope) {
+  $(divId).click(function() {
+    if ($(divId).hasClass('active')){
+      $(divId).removeClass('active');
+      showHideMarkers(scope,true);
+    } else {
+      $(divId).addClass('active');
+      showHideMarkers(scope,false);
+    }
+  });
 }
 
 var map;
