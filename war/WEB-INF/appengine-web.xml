@@ -17,6 +17,7 @@
         <include path="/img/**" expiration="5d"/>
         <include path="/css/**" />
         <include path="/index.html" />
+        <include path="/channel.html" />
     </static-files>
     
   <!-- Configure java.util.logging -->
