@@ -13,6 +13,7 @@
     <static-files>
         <include path="/favicon.ico" expiration="5d" />
         <include path="/js/**" />
+        <include path="/fancybox/**" />
         <include path="/img/**" expiration="5d"/>
         <include path="/css/**" />
         <include path="/index.html" />

@@ -232,6 +232,17 @@ function initialize() {
     map = new google.maps.Map(document.getElementById('map_canvas'),
         myOptions);
 
+    var adUnitDiv = document.createElement('div');
+    var adUnitOptions = {
+      format: google.maps.adsense.AdFormat.BANNER,
+      position: google.maps.ControlPosition.BOTTOM,
+      map: map,
+      visible: true,
+      channel: 1759328870,
+      publisherId: 'pub-2574082172506282'
+    }
+    adUnit = new google.maps.adsense.AdUnit(adUnitDiv, adUnitOptions);  
+    
     handleNoGeolocation(null);
     // Try HTML5 geolocation
     if(navigator.geolocation) {
@@ -327,6 +338,7 @@ function addMarker(map,lat,lon,id,type){
     google.maps.event.addListener(infowindow,'domready',function(){
       getEvents(id,jQuery('#events_'+id));
       window._gaq.push(['_trackPageview', '/showVenueEvents/'+id]);
+      
     });
     if (type === 1) {
       dayMarkers.push(marker);
@@ -363,19 +375,27 @@ function showHideByType(markerArray, showHide) {
 function getEvents(id,div) {
   jQuery.getJSON( '/events', {id:id},function(a){
     var events = a.resultsPage.results.event;
-    //console.log(events.length);
-    //console.log(events);
-	var thisHtml = '';
-	var v = events[0].venue;
-	thisHtml += '<div class="venue">'+v.displayName+'</div>';
-    for (var i=0; i<events.length;i++) {
-      var eventName = events[i].displayName;
-      thisHtml += '<div class="event"><a href="'+events[i].uri+'" target="_blank">'+eventName+'</a></div>';      
-    }
-    thisHtml += '<div class="ad"><script type="text/javascript">google_ad_client = "ca-pub-2574082172506282";google_ad_slot = "8194191755";google_ad_width = 468;google_ad_height = 60;</script><script type="text/javascript" src="http://pagead2.googlesyndication.com/pagead/show_ads.js"></script></div>';  
-	div.html(thisHtml);
+  	var thisHtml = '';
+  	var v = events[0].venue;
+  	thisHtml += '<div class="venue">'+v.displayName+'</div>';
+      for (var i=0; i<events.length;i++) {
+        var eventName = events[i].displayName;
+        thisHtml += '<div class="event"><a class="outLink" href="'+events[i].uri+'" >'+eventName+'</a></div>';      
+      }
+        
+  	div.html(thisHtml);
+  	
+  	$(".outLink").fancybox({
+        'width'       : '100%',
+        'height'      : '100%',
+        'autoScale'     : false,
+        'transitionIn'    : 'none',
+        'transitionOut'   : 'none',
+        'type'        : 'iframe'
+      });
   })
-    _gaq.push(['_trackEvent', 'Events', 'Get']);
+  
+  _gaq.push(['_trackEvent', 'Events', 'Get']);
 }
 
 function getVenues(bounds) {
@@ -413,7 +433,7 @@ function afterRendering() {
   attachClickFilter("#todayEvents","day");
   attachClickFilter("#weekEvents","week");
   attachClickFilter("#laterEvents","later");
-  
+ 
 }
 
 function attachClickFilter(divId,scope) {
@@ -428,6 +448,9 @@ function attachClickFilter(divId,scope) {
   });
 }
 
+
+
 var map;
+var adUnit;
 google.maps.event.addDomListener(window, 'load', initialize);
 $(document).ready(afterRendering)
