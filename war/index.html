@@ -33,13 +33,28 @@
 
   <body>
   <div id="fb-root"></div>
-    <script>(function(d, s, id) {
-  var js, fjs = d.getElementsByTagName(s)[0];
-  if (d.getElementById(id)) return;
-  js = d.createElement(s); js.id = id;
-  js.src = "//connect.facebook.net/en_US/all.js#xfbml=1&appId=173715422709083";
-  fjs.parentNode.insertBefore(js, fjs);
-}(document, 'script', 'facebook-jssdk'));</script>
+   <script>
+     window.fbAsyncInit = function() {
+       FB.init({
+         appId      : '173715422709083', // App ID
+         channelUrl : '//www.musicbymap.com/channel.html', // Channel File
+         status     : true, // check login status
+         cookie     : true, // enable cookies to allow the server to access the session
+         xfbml      : true  // parse XFBML
+       });
+   
+       // Additional initialization code here
+     };
+   
+     // Load the SDK Asynchronously
+     (function(d){
+        var js, id = 'facebook-jssdk', ref = d.getElementsByTagName('script')[0];
+        if (d.getElementById(id)) {return;}
+        js = d.createElement('script'); js.id = id; js.async = true;
+        js.src = "//connect.facebook.net/en_US/all.js";
+        ref.parentNode.insertBefore(js, ref);
+      }(document));
+   </script>
 
     <div id="header">
      <div id="logo">MusicByMap</div>
@@ -81,7 +96,7 @@
         <div id="map_canvas" style="width:100%; height:100%;"></div>
     </div>
     <div id="footer">
-    <div style="float: left;"><fb:like send="true" width="450" show_faces="true"></fb:like></div>
+    <div style="float: left;"><fb:like send="false" width="450" show_faces="true"></fb:like></div>
             <div style="float: right;"><img  src="img/sk.jpg"></div>
     </div>
     
