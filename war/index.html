@@ -1,23 +1,21 @@
 <!DOCTYPE html>
-<html xmlns:fb="http://ogp.me/ns/fb#">
+<html xmlns:fb="http://ogp.me/ns/fb#" itemscope itemtype="http://schema.org/Product">
   <head>
     <link href='http://fonts.googleapis.com/css?family=Lemon' rel='stylesheet' type='text/css'>
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
     <title>Music By Map</title>
     <script type="text/javascript">
-
-  var _gaq = _gaq || [];
-  _gaq.push(['_setAccount', 'UA-1180378-9']);
-  _gaq.push(['_trackPageview']);
-
-  (function() {
-    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-  })();
-
-</script>
-  <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-1180378-9']);
+      _gaq.push(['_trackPageview']);
+    
+      (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+    </script>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
     <link rel="stylesheet" type="text/css" href="css/styles.css">
     <link href='css/chosen.css' rel='stylesheet' type='text/css'>
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
@@ -27,8 +25,16 @@
     <script type="text/javascript" src="./fancybox/jquery.fancybox-1.3.4.pack.js"></script>
     <link rel="stylesheet" type="text/css" href="/fancybox/jquery.fancybox-1.3.4.css" media="screen" /> 
   
-   
-  
+    <meta name="description" content="Discover concerts and music events near you by using a simple map"/>
+    <meta itemprop="name" content="Music By Map">
+    <meta itemprop="description" content="Discover concerts and other music events near you by simply looking and clicking on a map.">
+    <script type="text/javascript">
+      (function() {
+        var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+        po.src = 'https://apis.google.com/js/plusone.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+      })();
+    </script>
   </head>
 
   <body>
@@ -96,7 +102,7 @@
         <div id="map_canvas" style="width:100%; height:100%;"></div>
     </div>
     <div id="footer">
-    <div style="float: left;"><fb:like send="false" width="450" show_faces="true"></fb:like></div>
+    <div style="float: left;"><fb:like send="false" width="450" show_faces="true"></fb:like><g:plusone></g:plusone></div>
             <div style="float: right;"><img  src="img/sk.jpg"></div>
     </div>
     
