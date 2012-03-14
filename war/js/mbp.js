@@ -239,7 +239,7 @@ function initialize() {
       map: map,
       visible: true,
       channel: 1759328870,
-      publisherId: 'pub-2574082172506282'
+      publisherId: 'ca-pub-2574082172506282'
     }
     adUnit = new google.maps.adsense.AdUnit(adUnitDiv, adUnitOptions);  
     
