@@ -320,6 +320,8 @@ var dayMarkerVisible = true;
 var weekMarkerVisible = true;
 var laterMarkerVisible = true;
 
+var introVisible = true;
+
 function addMarker(map,lat,lon,id,type){
   var poz  = new google.maps.LatLng(lat,lon);
     var marker = new google.maps.Marker({
@@ -434,8 +436,61 @@ function afterRendering() {
   attachClickFilter("#todayEvents","day");
   attachClickFilter("#weekEvents","week");
   attachClickFilter("#laterEvents","later");
+  
+  introShowHideEvents();
+
  
 }
+
+function createCookie(name, value, days) {
+  if (days) {
+      var date = new Date();
+      date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+      var expires = "; expires=" + date.toGMTString();
+  }
+  else var expires = "";
+
+  document.cookie = name + "=" + value + expires + "; path=/";
+}
+
+function readCookie(name) {
+  var nameEQ = name + "=";
+  var ca = document.cookie.split(';');
+  for (var i = 0; i < ca.length; i++) {
+      var c = ca[i];
+      while (c.charAt(0) == ' ') c = c.substring(1, c.length);
+      if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length, c.length);
+  }
+  return null;
+}
+
+function introSwitch(){
+ 
+    if (introVisible) {
+    $('#introText').hide();
+    $('#introLabel').removeClass('active');
+      introVisible = false;
+      createCookie('closed',1,365);
+    } else {
+      $('#introText').show();
+      $('#introLabel').addClass('active');
+      introVisible = true;
+    }
+}
+
+function introShowHideEvents() {
+      
+    $("#introLabel").click(introSwitch);
+    $("#introCloseButton").click(introSwitch);
+    $('#introLabel').addClass('active');
+    if (readCookie("closed")) {
+      introVisible = false;
+      $('#introText').hide();
+      $('#introLabel').removeClass('active');
+    }
+}
+  
+
 
 function attachClickFilter(divId,scope) {
   $(divId).click(function() {
