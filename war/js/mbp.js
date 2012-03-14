@@ -186,6 +186,7 @@ function presetCities() {
                 {name: "SanFrancisco", lat: 37.7770, lon: -122.4176},
                 {name: "LosAngeles", lat: 34.05227, lon:-118.24304},
                 {name: "Boston", lat: 42.3592, lon: -71.0591},
+                {name: "Atlanta", lat: 33.7668, lon: -84.3885},
                 {name: "Chicago", lat: 41.8789, lon: -87.6291},
                 {name: "Paris", lat: 48.85672, lon: 2.35242},
                 {name: "Miami", lat: 25.7915, lon: -80.131},
