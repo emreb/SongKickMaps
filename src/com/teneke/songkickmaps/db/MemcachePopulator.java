@@ -48,11 +48,18 @@ public class MemCachePopulator {
 
     // find all the cities in memcache
     LinkedList<City> cities = MemCacheDB.getLoadedCities();
+    logger.info(cities.size() + " cities loaded from memcache index");
     // Append to a single quatree
     QuadTree<Spot> spots = new QuadTree<Spot>();
     for (City c : cities) {
+      logger.info("Loading " + c.getName());
       QuadTree<Spot> cityDb = MemCacheDB.getCitySpots(c.getId());
-      spots.insertSpotDB(cityDb);
+      try {
+        spots.insertSpotDB(cityDb);
+      } catch (Exception a) {
+        logger.log(Level.SEVERE, "Cannot insert into main spot DB data for "
+            + c.getName(), a);
+      }
     }
     // Return quadtree for servlet use
     return spots;

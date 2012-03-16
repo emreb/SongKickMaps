@@ -11,6 +11,7 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
 	<servlet-mapping>
 		<servlet-name>SongKickServer</servlet-name>
 		<url-pattern>/venues</url-pattern>
+		<load-on-startup>1</load-on-startup>
 	</servlet-mapping>
 	
 	<servlet>
