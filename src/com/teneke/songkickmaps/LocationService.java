@@ -30,19 +30,21 @@ public class LocationService {
     final City washington = new City("Washington", 1409, 38.9005, -77.0362);
     final City miami = new City("Miami", 9776, 25.7891, -80.2257);
     final City berlin = new City("Berlin", 28443, 52.52677, 13.4069);
+    final City istanbul = new City("Istanbul", 32463, 41.0427, 28.99000);
 
     cities.add(london);
     cities.add(sanfrancisco);
     cities.add(newyork);
     cities.add(losangeles);
     cities.add(philadelphia);
-    cities.add(atlanta);
     cities.add(boston);
     cities.add(chicago);
+    cities.add(atlanta);
     cities.add(washington);
     cities.add(paris);
     cities.add(miami);
     cities.add(berlin);
+    cities.add(istanbul);
 
   }
 

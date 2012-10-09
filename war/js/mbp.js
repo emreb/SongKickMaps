@@ -190,6 +190,7 @@ function presetCities() {
                 {name: "Chicago", lat: 41.8789, lon: -87.6291},
                 {name: "Paris", lat: 48.85672, lon: 2.35242},
                 {name: "Miami", lat: 25.7915, lon: -80.131},
+                {name: "Istanbul", lat: 41.0427, lon: 28.9900},
                 {name: "Philadelphia", lat: 39.95263, lon: -75.16346},
                 {name: "Berlin", lat: 52.52677, lon: 13.4069},
                 {name: "Washington", lat: 38.9005, lon: -77.0362}];
@@ -391,7 +392,6 @@ function getEvents(id,div) {
   	$(".outLink").fancybox({
         'width'       : '100%',
         'height'      : '100%',
-        'top'         : '45px',
         'autoScale'     : false,
         'transitionIn'    : 'none',
         'transitionOut'   : 'none',
