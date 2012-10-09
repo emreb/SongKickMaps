@@ -391,6 +391,7 @@ function getEvents(id,div) {
   	$(".outLink").fancybox({
         'width'       : '100%',
         'height'      : '100%',
+        'top'         : '45px',
         'autoScale'     : false,
         'transitionIn'    : 'none',
         'transitionOut'   : 'none',
