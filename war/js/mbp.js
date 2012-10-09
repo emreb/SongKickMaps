@@ -193,7 +193,11 @@ function presetCities() {
                 {name: "Istanbul", lat: 41.0427, lon: 28.9900},
                 {name: "Philadelphia", lat: 39.95263, lon: -75.16346},
                 {name: "Berlin", lat: 52.52677, lon: 13.4069},
-                {name: "Washington", lat: 38.9005, lon: -77.0362}];
+                {name: "Washington", lat: 38.9005, lon: -77.0362},
+                {name: "Amsterdam", lat: 52.37021, lon: 4.89516},
+                {name: "Toronto", lat: 43.65635, lon: -79.3860},
+                {name: "Munich", lat: 48.13657, lon: 11.57712}];  
+ 
                 
   return cities;
 }

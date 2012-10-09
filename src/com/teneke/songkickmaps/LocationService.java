@@ -31,6 +31,9 @@ public class LocationService {
     final City miami = new City("Miami", 9776, 25.7891, -80.2257);
     final City berlin = new City("Berlin", 28443, 52.52677, 13.4069);
     final City istanbul = new City("Istanbul", 32463, 41.0427, 28.99000);
+    final City amsterdam = new City("Amsterdam", 31366, 52.37021, 4.89516);
+    final City toronto = new City("Toronto", 27396, 43.65635, -79.3860);
+    final City munich = new City("Munich", 28549, 48.13657, 11.57712);
 
     cities.add(london);
     cities.add(sanfrancisco);
@@ -45,6 +48,9 @@ public class LocationService {
     cities.add(miami);
     cities.add(berlin);
     cities.add(istanbul);
+    cities.add(amsterdam);
+    cities.add(toronto);
+    cities.add(munich);
 
   }
 
