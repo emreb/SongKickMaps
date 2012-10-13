@@ -30,10 +30,12 @@ public class Spot implements Comparable<Spot>, Serializable {
 
 	}
 
-	public void setNextEvent(String date) {
-		DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+	public void setNextEvent(String date, String time, String datetime) {
+		System.out.println(date + ":" + time + ":" + datetime);
+		DateFormat fullFormatter = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ");
+		DateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd");
 		try {
-			Date d = formatter.parse(date);
+			Date d = fullFormatter.parse(datetime);
 			long diff = d.getTime() - System.currentTimeMillis();
 			if (diff < DAY) {
 				nextEvent = 1;

@@ -94,9 +94,13 @@ public class SpotDb implements Serializable {
 						&& venue.get("lng") != JSONObject.NULL) {
 					long venueId = -1;
 					String eventDate = null;
+					String eventDateTime = null;
+					String eventTime = null;
 					try {
 						venueId = venue.getLong("id");
 						eventDate = event.getJSONObject("start").getString("date");
+						eventDateTime = event.getJSONObject("start").getString("datetime");
+						eventTime = event.getJSONObject("start").getString("time");
 					} catch (Exception e) {
 						// System.err.println("Error in parsing:" + venue);
 					}
@@ -105,7 +109,7 @@ public class SpotDb implements Serializable {
 							Spot v = new Spot(venue.getDouble("lat"), venue.getDouble("lng"),
 									venue.getLong("id"));
 							if (eventDate != null) {
-								v.setNextEvent(eventDate);
+								v.setNextEvent(eventDate, eventTime, eventDateTime);
 							}
 
 							if (LocationService.isLessThanRange(c, v)) {
